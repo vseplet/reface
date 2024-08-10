@@ -37,15 +37,15 @@ export class RefaceApp<T> {
   }
 }
 
-RefaceComponent<{ a: string; b: number }>({
-  render: ({ data, componentRoute }) => {
-    return html`
-      <div>
-        <h1>Hello ${data}</h1>
-      </div>
-    `;
-  },
-});
+// RefaceComponent<{ a: string; b: number }>({
+//   render: ({ data, componentRoute }) => {
+//     return html`
+//       <div>
+//         <h1>Hello ${data}</h1>
+//       </div>
+//     `;
+//   },
+// });
 
 export { css, html, js, RefaceLayout, salt };
 export * from "@hono/hono";
