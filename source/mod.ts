@@ -1,5 +1,6 @@
 import { RefaceLayout } from "./entities/Layout.ts";
 import { Hono } from "@hono/hono";
+import { BaseAppOptions } from "$types";
 
 const css = String.raw;
 const html = String.raw;
@@ -25,11 +26,11 @@ export const RefaceComponent = <T>(
 export const RefaceElement = <T>(_: (props: { data: T }) => string) => {};
 
 export class RefaceApp<T> {
-  constructor(config: {
-    baseUrl?: string;
-    staticPath?: string;
-    layout: typeof RefaceLayout<T>;
-  }) {
+  constructor(
+    config: BaseAppOptions & {
+      layout: typeof RefaceLayout<T>;
+    },
+  ) {
   }
 
   getHonoRouter() {

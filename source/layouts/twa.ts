@@ -8,6 +8,7 @@ import {
 import { bluma, bootstrap } from "$/resources/styles.ts";
 import { bootstrapIcons } from "$/resources/icons.ts";
 import { html, RefaceLayout } from "$/mod.ts";
+import type { BaseAppOptions } from "$types";
 
 /**
  * TWA is a layout for building TWA (Telegram Web Apps)
@@ -21,26 +22,24 @@ export const twa = RefaceLayout<{
   bootstrapIcons?: boolean;
   htmx?: boolean;
   bluma?: boolean;
-}>((config) => {
-  return (page: string) => {
+}>((options) => {
+  return (page: string, appOptions: BaseAppOptions) => {
     return html`
       <html>
       <head>
         <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        ${config.htmx ? htmx : ""}
-        ${config.alpine ? alpinejs : ""}
-        ${config.hyperscript ? hyperscript : ""}
-        ${config.bootstrap ? bootstrap : ""}
-        ${config.bootstrapIcons ? bootstrapIcons : ""}
-        ${config.bluma ? bluma : ""}
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        ${options.htmx ? htmx : ""}
+        ${options.alpine ? alpinejs : ""}
+        ${options.hyperscript ? hyperscript : ""}
+        ${options.bootstrap ? bootstrap : ""}
+        ${options.bootstrapIcons ? bootstrapIcons : ""}
+        ${options.bluma ? bluma : ""}
         ${telegramWebApp}
-
-        <script src="/public/script.js"></script>
-        <link rel="stylesheet" href="/public/style.css">
-        <title>${config.title || "Reface TWA"}</title>
+        <script src="${appOptions.staticPath}/script.js"></script>
+        <link rel="stylesheet" href="${appOptions.staticPath}/style.css">
+        <title>${options.title || "Reface TWA"}</title>
       </head>
-
       <body>
         ${page}
       </body>

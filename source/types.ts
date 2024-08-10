@@ -1,3 +1,8 @@
+export type BaseAppOptions = {
+  baseUrl?: string;
+  staticPath?: string;
+};
+
 export type LayoutOptions = {
   title?: string;
   scripts?: {
