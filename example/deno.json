@@ -1,0 +1,13 @@
+{
+  "lock": false,
+  "imports": {
+    "$components/": "./components/",
+    "@hono/hono": "jsr:@hono/hono@4.5.0",
+    "@vseplet/reface": "../source/mod.ts",
+    "@vseplet/reface/components": "../source/components/mod.ts",
+    "@vseplet/reface/types": "../source/types.ts"
+  },
+  "tasks": {
+    "dev": "deno run --allow-all --watch=./main.ts ./main.ts"
+  }
+}
