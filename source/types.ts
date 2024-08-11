@@ -3,6 +3,8 @@ export type BaseAppOptions = {
   staticPath?: string;
 };
 
+export type Layout = (page: string, appOptions: BaseAppOptions) => string;
+
 export type LayoutOptions = {
   title?: string;
   scripts?: {
