@@ -1,7 +1,7 @@
 // deno-lint-ignore-file no-unused-vars
 import { htmx } from "$/resources/scripts.ts";
 import type { BaseAppOptions } from "$types";
-import { layout } from "$/enitites.ts";
+import { layout } from "$/entities.ts";
 import { html } from "$/helpers.ts";
 
 /**

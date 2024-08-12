@@ -1,4 +1,4 @@
-import { html } from "$/mod.ts";
+import { html } from "$/helpers.ts";
 
 export const bootstrap =
   html`<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"

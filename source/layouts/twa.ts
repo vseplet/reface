@@ -8,7 +8,7 @@ import {
 import { bluma, bootstrap } from "$/resources/styles.ts";
 import { bootstrapIcons } from "$/resources/icons.ts";
 import type { BaseAppOptions } from "$types";
-import { layout } from "$/enitites.ts";
+import { layout } from "$/entities.ts";
 import { html } from "$/helpers.ts";
 
 /**

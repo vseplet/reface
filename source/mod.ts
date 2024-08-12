@@ -1,7 +1,7 @@
 import { Hono } from "@hono/hono";
 import type { BaseAppOptions, Layout, Page } from "$types";
 import { clean } from "$/layouts/clean.ts";
-import { component, element, layout, page } from "$/enitites.ts";
+import { component, element, layout, page } from "./entities.ts";
 import { css, html, js, salt } from "$/helpers.ts";
 
 class RefaceHono<T> {

@@ -1,4 +1,4 @@
-import { html } from "$/mod.ts";
+import { html } from "$/helpers.ts";
 
 export const htmx =
   html`<script src="https://unpkg.com/htmx.org@2.0.1"></script>`;
