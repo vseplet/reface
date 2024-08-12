@@ -9,7 +9,6 @@
   },
   "exports": {
     ".": "./source/mod.ts",
-    "./entities": "./source/entities/mod.ts",
     "./components": "./source/components/mod.ts",
     "./elements": "./source/elements/mod.ts",
     "./layouts": "./source/layouts/mod.ts",

@@ -5,6 +5,8 @@ export type BaseAppOptions = {
 
 export type Layout = (page: string, appOptions: BaseAppOptions) => string;
 
+export type Page<T> = (props: PageProps<T>) => string;
+
 export type LayoutOptions = {
   title?: string;
   scripts?: {
@@ -25,3 +27,13 @@ export type LayoutOptions = {
 
 export type ResourceScriptOptions = {};
 export type ResourceStyleOptions = {};
+
+export type PageProps<T> = {
+  data: T;
+  route: string;
+  params: { [x: string]: string };
+  headers: Record<string, string>;
+  query: Record<string, string>;
+};
+
+export type ComponentProps<T> = {};

@@ -1,6 +1,6 @@
 // deno-lint-ignore-file no-unused-vars
 import { htmx } from "$/resources/scripts.ts";
-import { html, RefaceLayout } from "$/mod.ts";
+import { html, layout } from "$/mod.ts";
 import type { BaseAppOptions } from "$types";
 
 /**
@@ -8,7 +8,7 @@ import type { BaseAppOptions } from "$types";
  * @param config - Layout configuration
  * @returns Layout function
  */
-export const clean = RefaceLayout<{
+export const clean = layout<{
   htmx?: boolean;
 }>((options) => {
   return (page: string, appOptions: BaseAppOptions) => {

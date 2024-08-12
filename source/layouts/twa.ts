@@ -7,7 +7,7 @@ import {
 } from "$/resources/scripts.ts";
 import { bluma, bootstrap } from "$/resources/styles.ts";
 import { bootstrapIcons } from "$/resources/icons.ts";
-import { html, RefaceLayout } from "$/mod.ts";
+import { html, layout } from "$/mod.ts";
 import type { BaseAppOptions } from "$types";
 
 /**
@@ -15,7 +15,7 @@ import type { BaseAppOptions } from "$types";
  * @param config - Layout configuration
  * @returns Layout function
  */
-export const twa = RefaceLayout<{
+export const twa = layout<{
   hyperscript?: boolean;
   alpine?: boolean;
   bootstrap?: boolean;

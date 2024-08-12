@@ -1,21 +1,27 @@
-import { RefaceLayout } from "./entities/Layout.ts";
 import { Hono } from "@hono/hono";
-import type { BaseAppOptions, Layout } from "$types";
+import type { BaseAppOptions, Layout, LayoutOptions, Page } from "$types";
 import { clean } from "$/layouts/clean.ts";
 
 const css = String.raw;
+
 const html = String.raw;
+
 const js = String.raw;
+
 const salt = (name?: string) =>
   name ? `${name}_${crypto.randomUUID()}` : crypto.randomUUID();
 
-const RefacePage = <T>(
-  _: {
-    render: (props: { data: T; pageRoute: string }) => string;
-  },
-) => {};
+const layout = <C>(
+  _: (
+    layoutOptions: C & LayoutOptions,
+  ) => (page: string, appOptions: BaseAppOptions) => string,
+) => _;
 
-const RefaceComponent = <T>(
+const page = <T>(
+  _: Page<T>,
+) => _;
+
+const component = <T>(
   _: {
     render: (
       props: { data: T; apiRoute: string; componentRoute: string },
@@ -24,35 +30,36 @@ const RefaceComponent = <T>(
   },
 ) => {};
 
-const RefaceElement = <T>(_: (props: { data: T }) => string) => {};
+const element = <T>(_: (props: { data: T }) => string) => {};
 
 class RefaceHono<T> {
   #router: Hono;
-  #defaultLayout: Layout;
-  #components: typeof RefaceComponent<T>[] = [];
+
   #pages: {
     route: string;
-    page: typeof RefacePage<T>;
+    page: Page<T>;
     layout: Layout;
   }[] = [];
 
+  #options: BaseAppOptions & {
+    layout: Layout;
+  };
+
   constructor(
-    config?: BaseAppOptions & {
-      layout: Layout;
+    options?: BaseAppOptions & {
+      layout?: Layout;
     },
   ) {
+    this.#options = {
+      ...options,
+      layout: options?.layout || clean({ htmx: true }),
+    };
     this.#router = new Hono();
-    this.#defaultLayout = config?.layout || clean({ htmx: true });
-  }
-
-  component(component: typeof RefaceComponent<T>) {
-    this.#components.push(component);
-    return this;
   }
 
   page(
     route: string,
-    page: typeof RefacePage<T>,
+    page: Page<T>,
     options?: {
       layout?: Layout;
     },
@@ -60,8 +67,22 @@ class RefaceHono<T> {
     this.#pages.push({
       route,
       page,
-      layout: options?.layout || this.#defaultLayout,
+      layout: options?.layout || this.#options.layout,
     });
+
+    this.#router.get(route, (c) => {
+      return c.html(this.#options.layout(
+        page({
+          data: {} as T,
+          route,
+          params: c.req.param(),
+          headers: c.req.header(),
+          query: c.req.query(),
+        }),
+        this.#options,
+      ));
+    });
+
     return this;
   }
 
@@ -70,17 +91,7 @@ class RefaceHono<T> {
   }
 }
 
-export {
-  css,
-  html,
-  js,
-  RefaceComponent,
-  RefaceElement,
-  RefaceHono,
-  RefaceLayout,
-  RefacePage,
-  salt,
-};
+export { component, css, element, html, js, layout, page, RefaceHono, salt };
 
 export * from "@hono/hono";
 // Layout -> Page  -> Component -> Element
