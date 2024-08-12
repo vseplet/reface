@@ -7,8 +7,9 @@ import {
 } from "$/resources/scripts.ts";
 import { bluma, bootstrap } from "$/resources/styles.ts";
 import { bootstrapIcons } from "$/resources/icons.ts";
-import { html, layout } from "$/mod.ts";
 import type { BaseAppOptions } from "$types";
+import { layout } from "$/enitites.ts";
+import { html } from "$/helpers.ts";
 
 /**
  * TWA is a layout for building TWA (Telegram Web Apps)

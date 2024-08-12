@@ -1,7 +1,8 @@
 // deno-lint-ignore-file no-unused-vars
 import { htmx } from "$/resources/scripts.ts";
-import { html, layout } from "$/mod.ts";
 import type { BaseAppOptions } from "$types";
+import { layout } from "$/enitites.ts";
+import { html } from "$/helpers.ts";
 
 /**
  * TWA is a layout for building TWA (Telegram Web Apps)

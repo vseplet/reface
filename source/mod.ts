@@ -1,36 +1,8 @@
 import { Hono } from "@hono/hono";
-import type { BaseAppOptions, Layout, LayoutOptions, Page } from "$types";
+import type { BaseAppOptions, Layout, Page } from "$types";
 import { clean } from "$/layouts/clean.ts";
-
-const css = String.raw;
-
-const html = String.raw;
-
-const js = String.raw;
-
-const salt = (name?: string) =>
-  name ? `${name}_${crypto.randomUUID()}` : crypto.randomUUID();
-
-const layout = <C>(
-  _: (
-    layoutOptions: C & LayoutOptions,
-  ) => (page: string, appOptions: BaseAppOptions) => string,
-) => _;
-
-const page = <T>(
-  _: Page<T>,
-) => _;
-
-const component = <T>(
-  _: {
-    render: (
-      props: { data: T; apiRoute: string; componentRoute: string },
-    ) => string;
-    api?: (props: { data: T }) => void;
-  },
-) => {};
-
-const element = <T>(_: (props: { data: T }) => string) => {};
+import { component, element, layout, page } from "$/enitites.ts";
+import { css, html, js, salt } from "$/helpers.ts";
 
 class RefaceHono<T> {
   #router: Hono;
