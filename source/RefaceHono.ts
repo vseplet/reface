@@ -88,6 +88,14 @@ export class RefaceHono<T> {
       }, "");
     };
 
+    const componentRender = (
+      str: TemplateStringsArray,
+      args: any[],
+      cmpCounter = 0,
+    ) => {
+      throw new Error("Not implemented");
+    };
+
     this.#router.get(pageArgs.route, async (c: Context) => {
       return c.html(
         this.#options.layout(
@@ -118,6 +126,14 @@ export class RefaceHono<T> {
         return c.html(response?.html || "", {
           status: response?.status || 200,
         });
+      });
+    };
+
+    const addCmpDrawRoute = (
+      route: string,
+    ) => {
+      this.#router.get(route, async (c: Context) => {
+        return c.html("");
       });
     };
 
@@ -170,6 +186,14 @@ export class RefaceHono<T> {
     };
 
     pageApi(pageArgs.route, page.api);
+    return this;
+  }
+
+  page() {
+    return this;
+  }
+
+  portal() {
     return this;
   }
 
