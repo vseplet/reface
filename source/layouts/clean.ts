@@ -2,7 +2,6 @@
 import { htmx } from "$/resources/scripts.ts";
 import type { BaseAppOptions } from "$types";
 import { layout } from "$/entities.ts";
-import { html } from "$/helpers.ts";
 
 /**
  * TWA is a layout for building TWA (Telegram Web Apps)
@@ -13,7 +12,7 @@ export const clean = layout<{
   htmx?: boolean;
 }>((options) => {
   return (page: string, appOptions: BaseAppOptions) => {
-    return html`
+    return `
       <html>
         <head>
           <meta charset="UTF-8">

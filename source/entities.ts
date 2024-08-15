@@ -59,4 +59,10 @@ export const element = <T>(
     str: TemplateStringsArray;
     args: any[];
   },
-) => struct;
+) =>
+(props: T) => {
+  return {
+    isElement: true,
+    struct: () => struct({ ...props }),
+  };
+};

@@ -10,7 +10,9 @@ export const html = (
 export const js = String.raw;
 
 export const salt = (name?: string) =>
-  name ? `${name}_${crypto.randomUUID()}` : crypto.randomUUID();
+  name
+    ? `${name}_${Math.random() * 10000000000 | 0}`
+    : "s" + (Math.random() * 10000000000 | 0);
 
 export const GET = (path: string) => `get|${path}`;
 export const POST = (path: string) => `post|${path}`;

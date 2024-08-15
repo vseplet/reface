@@ -1,23 +1,16 @@
 import { clean } from "$/layouts/clean.ts";
-import { Hono } from "@hono/hono";
-import type { ApiHandlers, BaseAppOptions, Layout, Page } from "$types";
+import { type Context, Hono } from "@hono/hono";
+import type {
+  ApiHandler,
+  ApiHandlers,
+  ApiRequest,
+  BaseAppOptions,
+  Layout,
+  Page,
+} from "$types";
 
-class RefaceHono<T> {
+export class RefaceHono<T> {
   #router: Hono;
-
-  #components: {
-    route: string;
-  }[] = [];
-
-  #handlers: {
-    route: string;
-  }[] = [];
-
-  #pages: {
-    route: string;
-    page: Page<T>;
-    layout: Layout;
-  }[] = [];
 
   #options: BaseAppOptions & {
     layout: Layout;
@@ -35,45 +28,148 @@ class RefaceHono<T> {
     this.#router = new Hono();
   }
 
-  load(to: "page" | "api" | "component") {
-    return this;
-  }
-
   add(
-    args: {
+    pageArgs: {
       route: string;
       page: Page<T>;
-      api?: ApiHandlers<T>;
-      components?: {
-        [route: string]: {
-          route: string;
-          api?: ApiHandlers<T>;
-          component: (props: { data: T }) => string;
-        };
-      };
       options?: {
         layout?: Layout;
       };
     },
   ) {
-    this.#pages.push({
-      route: args.route,
-      page: args.page,
-      layout: args.options?.layout || this.#options.layout,
+    //@ts-ignore
+    const page = pageArgs.page({});
+    const pageStruct = page.struct({
+      api: {
+        base: "",
+        page: "",
+        me: "",
+      },
+      route: "",
+      params: {},
+      headers: {},
+      query: {},
     });
 
-    this.#router.get(args.route, (c) => {
-      return c.html(this.#options.layout(
-        args.page({
-          route: args.route,
+    const pageRender = (
+      str: TemplateStringsArray,
+      args: any[],
+      cmpCounter = 0,
+    ): string => {
+      return str.reduce((acc, part, i) => {
+        const arg = args[i];
+        if (arg?.isComponent) {
+          const componentStruct = arg.struct({
+            api: {
+              me: `/api${
+                pageArgs.route == "/" ? "" : pageArgs.route
+              }/c${cmpCounter}`,
+              base: "",
+              page: "",
+            },
+          });
+          cmpCounter++;
+          return acc + part +
+            pageRender(
+              componentStruct.str,
+              componentStruct.args,
+              cmpCounter,
+            );
+        } else if (arg?.isElement) {
+          const elementStruct = arg.struct();
+          return acc + part +
+            pageRender(
+              elementStruct.str,
+              elementStruct.args,
+              cmpCounter,
+            );
+        }
+        return acc + part + (arg || "");
+      }, "");
+    };
+
+    this.#router.get(pageArgs.route, async (c: Context) => {
+      return c.html(
+        this.#options.layout(
+          pageRender(pageStruct.str, pageStruct.args),
+          this.#options,
+        ),
+      );
+    });
+
+    const addApiRoute = (
+      method: string,
+      route: string,
+      handler: ApiHandler<T>,
+    ) => {
+      console.log(route);
+      //@ts-ignore
+      this.#router[method](route, async (c: Context) => {
+        const request: ApiRequest<T> = {
+          //@ts-ignore
+          data: {},
+          route,
           params: c.req.param(),
-          headers: c.req.header(),
           query: c.req.query(),
-        }),
-        this.#options,
-      ));
-    });
+          headers: c.req.header(),
+        };
 
+        const response = await handler(request);
+        return c.html(response?.html || "", {
+          status: response?.status || 200,
+        });
+      });
+    };
+
+    const recursiveComponentsApi = (
+      route: string,
+      args: any[],
+      counter = 0,
+    ) => {
+      args.forEach((arg) => {
+        if (arg.isComponent) {
+          const childArgs = arg.struct({
+            api: {
+              me: `/api${route == "/" ? "" : route}/c${counter}`,
+              base: "",
+              page: "",
+            },
+          }).args;
+
+          const componentApi = arg.api;
+
+          if (componentApi) {
+            for (const key in componentApi) {
+              const [method, path] = key.split("|");
+              addApiRoute(
+                method,
+                `/api${route == "/" ? "" : route}/c${counter}${path}`,
+                componentApi[key],
+              );
+            }
+            counter++;
+          }
+          recursiveComponentsApi(route, childArgs, counter);
+        }
+      });
+    };
+
+    const pageApi = (route: string, api?: ApiHandlers<T>) => {
+      if (api) {
+        for (const key in api) {
+          const [method, path] = key.split("|");
+          addApiRoute(
+            method,
+            `/api${route == "/" ? "" : route}${path}`,
+            api[key],
+          );
+        }
+      }
+
+      recursiveComponentsApi(pageArgs.route, pageStruct.args);
+    };
+
+    pageApi(pageArgs.route, page.api);
     return this;
   }
 
