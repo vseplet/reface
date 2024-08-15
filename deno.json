@@ -18,7 +18,6 @@
     "./resources/styles": "./source/resources/styles.ts",
     "./resources/icons": "./source/resources/icons.ts",
     "./resources/fonts": "./source/resources/fonts.ts",
-    "./pages": "./source/pages/mod.ts",
     "./types": "./source/types.ts"
   },
   "imports": {
@@ -29,7 +28,7 @@
     "@std/crypto": "jsr:@std/crypto@^1.0.2"
   },
   "tasks": {
-    "example": "deno run --allow-all --watch=./example-site/main.ts ./example-site/main.ts",
+    "example": "deno run --allow-all --watch=./source/test.ts ./source/test.ts",
     "pub-dry": "deno publish --dry-run --allow-slow-types"
   },
   "fmt": {

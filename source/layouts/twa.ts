@@ -25,7 +25,7 @@ export const twa = layout<{
   bluma?: boolean;
 }>((options) => {
   return (page: string, appOptions: BaseAppOptions) => {
-    return html`
+    return `
       <html>
       <head>
         <meta charset="UTF-8">
