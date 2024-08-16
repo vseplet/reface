@@ -53,6 +53,12 @@ deno run --allow-all https://raw.githubusercontent.com/vseplet/reface/main/examp
 deno run --allow-all https://raw.githubusercontent.com/vseplet/reface/main/examples/ex2.ts
 ```
 
+#### 3. [Simple Deno KV viewer](./examples/ex3.ts)
+
+```sh
+deno run --allow-all https://raw.githubusercontent.com/vseplet/reface/main/examples/ex3.ts
+```
+
 ### Usage
 
 ...
