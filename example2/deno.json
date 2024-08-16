@@ -1,6 +1,0 @@
-{
-  "lock": false,
-  "tasks": {
-    "dev": "deno run --allow-all --watch=./main.ts ./main.ts"
-  }
-}

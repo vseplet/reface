@@ -5,8 +5,7 @@ export type BaseAppOptions = {
 
 export type Layout = (page: string, appOptions: BaseAppOptions) => string;
 
-export type ApiRequest<T> = {
-  data: T;
+export type ApiRequest = {
   route: string;
   params: { [x: string]: string };
   query: Record<string, string>;
@@ -19,11 +18,11 @@ export type ApiResponse = {
   status?: number;
 };
 
-export type ApiHandlers<T> = {
-  [method: string]: ApiHandler<T>;
+export type ApiHandlers = {
+  [method: string]: ApiHandler;
 };
 
-export type ApiHandler<T> = (req: ApiRequest<T>) => Promise<ApiResponse>;
+export type ApiHandler = (req: ApiRequest) => Promise<ApiResponse>;
 
 export type LayoutOptions = {
   title?: string;
@@ -63,7 +62,7 @@ export type ComponentObject<T> = {
     str: TemplateStringsArray;
     args: any[];
   };
-  api?: ApiHandlers<T>;
+  api?: ApiHandlers;
   name?: string;
 };
 
@@ -71,7 +70,9 @@ export type Component<T> = (props: T) => ComponentObject<T>;
 
 export type BasePageProps = {
   route: string;
-  params: { [x: string]: string };
+  params: {
+    [x: string]: string;
+  };
   headers: Record<string, string>;
   query: Record<string, string>;
 };
@@ -82,7 +83,7 @@ export type PageObject<T> = {
     str: TemplateStringsArray;
     args: any[];
   };
-  api?: ApiHandlers<T>;
+  api?: ApiHandlers;
   name?: string;
 };
 
@@ -95,3 +96,15 @@ export type Element<T> = (props: T) => {
     args: any[];
   };
 };
+
+export type Template = {
+  isTemplate: boolean;
+  str: TemplateStringsArray;
+  args: Array<any | Template>;
+};
+
+export type TemplaterGenerator<T> = (props: T) => Template;
+
+export type IslandProps<T> = {
+  api: string;
+} & T;
