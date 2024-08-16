@@ -1,4 +1,4 @@
-import type { Template } from "$types";
+import type { Layout, LayoutOptions, Template } from "$types";
 
 export const html = (
   str: TemplateStringsArray,
@@ -37,3 +37,9 @@ export const RESPONSE = (html?: string, status?: number) => {
     status,
   };
 };
+
+export const layout = <C>(
+  cb: (
+    layoutOptions: C & LayoutOptions,
+  ) => Layout,
+) => cb;

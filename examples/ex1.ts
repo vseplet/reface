@@ -1,15 +1,15 @@
 import {
   type BasePageProps,
   component,
+  GET,
   Hono,
   html,
   island,
   Reface,
+  RESPONSE,
   salt,
   twa,
-} from "jsr:@vseplet/reface@^0.0.11";
-
-import { GET, RESPONSE } from "jsr:@vseplet/reface@^0.0.11/helpers";
+} from "jsr:@vseplet/reface@^0.0.12";
 
 const Joke = island<{ interval: number }>((props) => {
   const id = salt();
