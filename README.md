@@ -41,7 +41,7 @@ initially do not anticipate them.
 
 ### Examples
 
-#### 1. [Simple form validation and joke generator](./examples/ex1.ts)
+#### 1. [Simple form validation and joke generator](./examples/ex1.ts) and [playground](https://dash.deno.com/playground/react-sucks)
 
 ```sh
 deno run --allow-all https://raw.githubusercontent.com/vseplet/reface/main/examples/ex1.ts
@@ -53,7 +53,7 @@ deno run --allow-all https://raw.githubusercontent.com/vseplet/reface/main/examp
 deno run --allow-all https://raw.githubusercontent.com/vseplet/reface/main/examples/ex2.ts
 ```
 
-#### 3. [Simple Deno KV viewer](./examples/ex3.ts)
+#### 3. [Simple Deno KV viewer](./examples/ex3.ts) and [playground](https://dash.deno.com/playground/reface-kv-viewer)
 
 ```sh
 deno run --allow-all --unstable-kv https://raw.githubusercontent.com/vseplet/reface/main/examples/ex3.ts
