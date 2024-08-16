@@ -89,9 +89,22 @@ const TreeView = component<
 );
 
 // deno-fmt-ignore
-const Home = island<PageProps>((props) => html`
+const Monitor = island<PageProps>((props) => html`
   <div class="container mt-5">
     <div class="row">
+      <div class="col-md-12">
+        <div class="border p-3 h-100">
+          <strong>Processes List</strong> (update every 2s: 'ps -A -o %cpu,pid,comm | sort -nr | head -10')
+          <hr class="my-2">
+          <div hx-get="${props.api}/proc"
+            hx-trigger="load, every 2s"
+            hx-target="this"
+            hx-swap="innerHTML">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row mt-3">
       <div class="col-md-6">
         <div class="border p-3 h-100">
           <div
@@ -106,19 +119,6 @@ const Home = island<PageProps>((props) => html`
       <div class="col-md-6">
         <div class="border p-3 h-100">
           <div id="file-view"></div>
-        </div>
-      </div>
-    </div>
-    <div class="row mt-3">
-      <div class="col-md-12">
-        <div class="border p-3 h-100">
-          <strong>Processes List</strong> (update every 2s: 'ps -A -o %cpu,pid,comm | sort -nr | head -10')
-          <hr class="my-2">
-          <div hx-get="${props.api}/proc"
-            hx-trigger="load, every 2s"
-            hx-target="this"
-            hx-swap="innerHTML">
-          </div>
         </div>
       </div>
     </div>
@@ -151,6 +151,6 @@ Deno.serve(
         htmx: true,
         bootstrap: true,
       }),
-    }).page("/", Home).getRouter(),
+    }).page("/", Monitor).getRouter(),
   ).fetch,
 );
