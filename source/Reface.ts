@@ -71,6 +71,7 @@ export class Reface {
       for (const [str, handler] of Object.entries(handlers)) {
         const [method, path] = str.split("|");
         const route = `/api/${name}${path}`;
+        const api = `/api/${name}`;
         // @ts-ignore
         this.router[method](
           route,
@@ -83,6 +84,7 @@ export class Reface {
               : new FormData();
 
             const request: ApiRequest = {
+              api,
               route,
               params: c.req.param(),
               query: c.req.query(),

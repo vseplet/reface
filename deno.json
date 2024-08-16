@@ -27,6 +27,7 @@
   },
   "tasks": {
     "ex1": "deno run --allow-all --watch=./examples/ex1.ts ./examples/ex1.ts",
+    "ex2": "deno run --allow-all --watch=./examples/ex2.ts ./examples/ex2.ts",
     "pub-dry": "deno publish --dry-run --allow-slow-types"
   },
   "fmt": {

@@ -6,6 +6,7 @@ export type BaseAppOptions = {
 export type Layout = (page: string, appOptions: BaseAppOptions) => string;
 
 export type ApiRequest = {
+  api: string;
   route: string;
   params: { [x: string]: string };
   query: Record<string, string>;

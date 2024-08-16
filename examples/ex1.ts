@@ -34,11 +34,19 @@ const Joke = island<{ interval: number }>((props) => {
 
 const Home = island<PageProps>((props) =>
   html`
-    <form hx-post="${props.api}/contact" hx-target="#output" class="row g-3 m-1">
+    <form
+      hx-post="${props.api}/contact"
+      hx-target="#output"
+      class="row g-3 m-1">
       ${Joke({ interval: 10 })}
       ${Joke({ interval: 10 })}
       <div class="col-auto">
-        <input class="form-control" type="text" name="name" aria-describedby="inputGroup-sizing-default">
+        <input
+          class="form-control"
+          type="text"
+          name="name"
+          aria-describedby="inputGroup-sizing-default"
+        >
       </div>
       <div class="col-auto">
         <button type="submit" class="btn btn-primary">Submit</button>
