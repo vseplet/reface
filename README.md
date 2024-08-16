@@ -40,18 +40,23 @@ well by nature, it can be used to implement web interfaces in tools that
 initially do not anticipate them.
 
 ### Examples
+
 #### 1. [Simple form validation and joke generator](./examples/ex1.ts)
+
 ```sh
 deno run --allow-all https://raw.githubusercontent.com/vseplet/reface/main/examples/ex1.ts
 ```
 
 #### 2. [File tree and proc list view](./examples/ex2.ts)
+
 ```sh
 deno run --allow-all https://raw.githubusercontent.com/vseplet/reface/main/examples/ex2.ts
 ```
 
 ### Usage
+
 ...
 
 ### License
+
 [MIT](./LICENSE)
