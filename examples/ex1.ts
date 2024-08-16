@@ -1,16 +1,15 @@
 import {
-  type BasePageProps,
-  type Context,
   GET,
   Hono,
   html,
   island,
+  type PageProps,
   POST,
   Reface,
   RESPONSE,
   salt,
   twa,
-} from "jsr:@vseplet/reface@^0.0.13";
+} from "jsr:@vseplet/reface@^0.0.15";
 
 const Joke = island<{ interval: number }>((props) => {
   const id = salt();
@@ -33,9 +32,10 @@ const Joke = island<{ interval: number }>((props) => {
     ),
 });
 
-const Home = island<BasePageProps>((props) =>
+const Home = island<PageProps>((props) =>
   html`
     <form hx-post="${props.api}/contact" hx-target="#output" class="row g-3 m-1">
+      ${Joke({ interval: 10 })}
       ${Joke({ interval: 10 })}
       <div class="col-auto">
         <input class="form-control" type="text" name="name" aria-describedby="inputGroup-sizing-default">
@@ -71,20 +71,5 @@ app.route(
     }),
   }).page("/", Home).getRouter(),
 );
-
-app.post("/api/contact", async (c: Context) => {
-  const name = (await c.req.formData()).get("name") as string;
-  return c.html(
-    `${
-      !/^[a-zA-Z\s]{1,20}$/.test(name)
-        ? `<div class="alert alert-warning" role="alert">
-        Invalid name format. Only English letters (1-20 characters) are allowed.
-      </div>`
-        : `<div class="alert alert-success" role="alert">
-        Contact form submitted for name: ${name}
-      </div>`
-    }`,
-  );
-});
 
 Deno.serve(app.fetch);

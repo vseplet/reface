@@ -1,8 +1,8 @@
 import type {
   ApiHandlers,
   ApiRequest,
-  BasePageProps,
   Layout,
+  PageProps,
   TemplaterGenerator,
 } from "$types";
 import { type Context, Hono } from "@hono/hono";
@@ -38,7 +38,7 @@ export class Reface {
     this.layout = options.layout;
   }
 
-  page(route: string, generate: TemplaterGenerator<BasePageProps>): Reface {
+  page(route: string, generate: TemplaterGenerator<PageProps>): Reface {
     this.router.get(route, async (c: Context) => {
       const template = generate({
         route,
