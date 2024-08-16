@@ -46,10 +46,7 @@ export class Reface {
         query: c.req.query(),
         headers: c.req.header(),
       });
-
       const html = render(template);
-      console.log(html);
-
       return c.html(this.layout(html, {}));
     });
 
@@ -78,11 +75,19 @@ export class Reface {
         this.router[method](
           route,
           async (c: Context) => {
+            const contentType = c.req.header("content-type");
+            const formData = contentType &&
+                (contentType.includes("multipart/form-data") ||
+                  contentType.includes("application/x-www-form-urlencoded"))
+              ? await c.req.formData()
+              : new FormData();
+
             const request: ApiRequest = {
               route,
               params: c.req.param(),
               query: c.req.query(),
               headers: c.req.header(),
+              formData,
             };
 
             const response = await handler(request);

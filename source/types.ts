@@ -10,7 +10,7 @@ export type ApiRequest = {
   params: { [x: string]: string };
   query: Record<string, string>;
   headers: Record<string, string>;
-  formData?: Record<string, string>;
+  formData: FormData;
 };
 
 export type ApiResponse = {

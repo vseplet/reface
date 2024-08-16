@@ -1,4 +1,4 @@
-import type { Layout, LayoutOptions, Template } from "$types";
+import type { ApiResponse, Layout, LayoutOptions, Template } from "$types";
 
 export const html = (
   str: TemplateStringsArray,
@@ -31,9 +31,18 @@ export const POST = (path: string) => `post|${path}`;
 export const PUT = (path: string) => `put|${path}`;
 export const PATCH = (path: string) => `patch|${path}`;
 export const DELETE = (path: string) => `delete|${path}`;
-export const RESPONSE = (html?: string, status?: number) => {
+export const RESPONSE = (
+  html?: string | Template,
+  status?: number,
+): ApiResponse => {
+  if (html && typeof html === "object" && html.isTemplate) {
+    return {
+      html: render(html),
+      status,
+    };
+  }
   return {
-    html,
+    html: typeof html === "string" ? html : undefined,
     status,
   };
 };

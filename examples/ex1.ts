@@ -1,15 +1,16 @@
 import {
   type BasePageProps,
-  component,
+  type Context,
   GET,
   Hono,
   html,
   island,
+  POST,
   Reface,
   RESPONSE,
   salt,
   twa,
-} from "jsr:@vseplet/reface@^0.0.12";
+} from "jsr:@vseplet/reface@^0.0.13";
 
 const Joke = island<{ interval: number }>((props) => {
   const id = salt();
@@ -23,7 +24,7 @@ const Joke = island<{ interval: number }>((props) => {
     </div>
   `;
 }, {
-  [GET("/joke")]: async () =>
+  [GET("/joke")]: async (req) =>
     RESPONSE(
       await (await fetch(
         "https://icanhazdadjoke.com/",
@@ -32,19 +33,58 @@ const Joke = island<{ interval: number }>((props) => {
     ),
 });
 
-const Home = component<BasePageProps>((props) => {
-  return html`<div>${Joke({ interval: 5 })}</div>`;
+const Home = island<BasePageProps>((props) =>
+  html`
+    <form hx-post="${props.api}/contact" hx-target="#output" class="row g-3 m-1">
+      ${Joke({ interval: 10 })}
+      <div class="col-auto">
+        <input class="form-control" type="text" name="name" aria-describedby="inputGroup-sizing-default">
+      </div>
+      <div class="col-auto">
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </div>
+      <div id="output" class="row-auto"></div>
+    </form>
+  `, {
+  [POST("/contact")]: async (req) => {
+    const name = req.formData?.get("name") as string;
+    return RESPONSE(
+      !/^[a-zA-Z\s]{1,20}$/.test(name)
+        ? html`<div class="alert alert-warning" role="alert">
+        Invalid name format. Only English letters (1-20 characters) are allowed.
+      </div>`
+        : html`<div class="alert alert-success" role="alert">
+        Contact form submitted for name: ${name}
+      </div>`,
+    );
+  },
 });
 
-const app = new Hono()
-  .route(
-    "/",
-    new Reface({
-      layout: twa({
-        htmx: true,
-        bootstrap: true,
-      }),
-    }).page("/", Home).getRouter(),
+const app = new Hono();
+
+app.route(
+  "/",
+  new Reface({
+    layout: twa({
+      htmx: true,
+      bootstrap: true,
+    }),
+  }).page("/", Home).getRouter(),
+);
+
+app.post("/api/contact", async (c: Context) => {
+  const name = (await c.req.formData()).get("name") as string;
+  return c.html(
+    `${
+      !/^[a-zA-Z\s]{1,20}$/.test(name)
+        ? `<div class="alert alert-warning" role="alert">
+        Invalid name format. Only English letters (1-20 characters) are allowed.
+      </div>`
+        : `<div class="alert alert-success" role="alert">
+        Contact form submitted for name: ${name}
+      </div>`
+    }`,
   );
+});
 
 Deno.serve(app.fetch);
