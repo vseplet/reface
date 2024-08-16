@@ -6,7 +6,6 @@ import type {
   TemplaterGenerator,
 } from "$types";
 import { type Context, Hono } from "@hono/hono";
-import { clean } from "$/layouts/clean.ts";
 import { render } from "$/helpers.ts";
 
 export class Reface {
@@ -33,10 +32,10 @@ export class Reface {
 
   constructor(
     private options: {
-      layout?: Layout;
+      layout: Layout;
     },
   ) {
-    this.layout = options.layout || clean({ htmx: true });
+    this.layout = options.layout;
   }
 
   page(route: string, generate: TemplaterGenerator<BasePageProps>): Reface {

@@ -26,7 +26,7 @@
     "@std/crypto": "jsr:@std/crypto@^1.0.2"
   },
   "tasks": {
-    "example": "deno run --allow-all --watch=./source/test.ts ./source/test.ts",
+    "ex1": "deno run --allow-all --watch=./examples/ex1.ts ./examples/ex1.ts",
     "pub-dry": "deno publish --dry-run --allow-slow-types"
   },
   "fmt": {

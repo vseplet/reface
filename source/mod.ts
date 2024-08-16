@@ -1,5 +1,3 @@
-import { html, render, salt } from "$/helpers.ts";
-
 import type {
   ApiHandlers,
   IslandProps,
@@ -8,6 +6,7 @@ import type {
   Template,
   TemplaterGenerator,
 } from "$/types.ts";
+
 import { Reface } from "./Reface.ts";
 
 const layout = <C>(
@@ -28,7 +27,8 @@ const island = <T>(
   return (props: T) => generate({ ...props, api: `/api/${name}` });
 };
 
-export { component, html, island, layout, Reface, render, salt };
+export { component, island, layout, Reface };
+export * from "$/helpers.ts";
 export * from "$/types.ts";
 export * from "$/layouts/mod.ts";
 export * from "@hono/hono";
