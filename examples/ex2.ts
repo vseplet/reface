@@ -11,6 +11,8 @@ import {
   twa,
 } from "jsr:@vseplet/reface@^0.0.16";
 
+import { sh } from "jsr:@vseplet/shelly@^0.1.12";
+
 const DirLink = component<{ to: string; api: string; name: string }>(
   // deno-fmt-ignore
   (props) => html`
@@ -107,6 +109,19 @@ const Home = island<PageProps>((props) => html`
         </div>
       </div>
     </div>
+    <div class="row mt-3">
+      <div class="col-md-12">
+        <div class="border p-3 h-100">
+          <strong>Processes List</strong> (update every 2s: 'ps -A -o %cpu,pid,comm | sort -nr | head -10')
+          <hr class="my-2">
+          <div hx-get="${props.api}/proc"
+            hx-trigger="load, every 2s"
+            hx-target="this"
+            hx-swap="innerHTML">
+          </div>
+        </div>
+      </div>
+    </div>
   </div>`, {
   [GET("/dir")]: async (req) => RESPONSE(
     TreeView({
@@ -122,6 +137,9 @@ const Home = island<PageProps>((props) => html`
       <hr class="my-2">
       <pre>${Deno.readTextFileSync(req.query.path)}</pre>
     </div>
+  `),
+  [GET("/proc")]: async (req) => RESPONSE(html`
+    <pre>${(await sh("ps -A -o %cpu,pid,comm | sort -nr | head -10")).stdout}</pre>
   `),
 });
 
