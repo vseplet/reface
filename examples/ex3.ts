@@ -10,7 +10,7 @@ import {
   render,
   RESPONSE,
   twa,
-} from "jsr:@vseplet/reface@^0.0.16";
+} from "jsr:@vseplet/reface@^0.0.17";
 
 const kv = await Deno.openKv();
 
@@ -66,17 +66,17 @@ const ListOfEntries = island((props) => {
 }, {
   [GET("/entries")]: async (props) => {
     const allEntries = await Array.fromAsync(kv.list({ prefix: [] }));
-    const rows = allEntries.map((entry, index) => {
-      return render(
+    // deno-fmt-ignore
+    return RESPONSE(
+      allEntries.map((entry, index) =>
         Row({
           index: index + 1,
           key: entry.key as string[],
           value: entry.value,
           versionstamp: entry.versionstamp,
-        }),
-      );
-    }).join("");
-    return RESPONSE(rows);
+        })
+      )
+    );
   },
 });
 

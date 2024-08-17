@@ -6,7 +6,6 @@ import {
   island,
   type PageProps,
   Reface,
-  render,
   RESPONSE,
   twa,
 } from "jsr:@vseplet/reface@^0.0.16";
@@ -80,7 +79,7 @@ const TreeView = component<
         entry.isDirectory
           ? DirLink({to: props.to + "/" + entry.name, api: props.api, name: entry.name})
           : FileLink({to: props.to + "/" + entry.name, api: props.api, name: entry.name})
-      ).map(render).join(" ")}
+      )}
       <hr class="my-2">
       ${UpButton({route: props.route, to: props.to.split("/").slice(0, -1).join("/"), current: props.to})}
       ${props.current ? DownButton({route: props.route, to: props.current}) : ""}
