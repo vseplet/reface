@@ -65,7 +65,9 @@ deno run --allow-all --unstable-kv https://raw.githubusercontent.com/vseplet/ref
 deno run --allow-all https://raw.githubusercontent.com/vseplet/reface/main/examples/ex4.ts
 ```
 
-## Tutorial - разработка простейшего веб терминала
+## Tutorial - development of a Simple Web Terminal
+
+![img](/ex4.gif)
 
 First, you need to import all necessary objects and functions. For simplicity,
 I'll do this directly from [JSR](https://jsr.io/@vseplet/reface):
