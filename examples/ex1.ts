@@ -9,7 +9,7 @@ import {
   RESPONSE,
   salt,
   twa,
-} from "jsr:@vseplet/reface@^0.0.16";
+} from "jsr:@vseplet/reface@^0.0.17";
 
 const Joke = island<{ interval: number }>((props) => {
   const id = salt();
