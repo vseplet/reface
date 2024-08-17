@@ -11,7 +11,6 @@ import { render } from "$/helpers.ts";
 export class Reface {
   private router = new Hono();
   private layout: Layout;
-
   static islandsCount = 0;
   static islandApiHandlers: Record<string, ApiHandlers> = {};
   static islandTemplateGenerators: Record<

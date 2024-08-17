@@ -9,18 +9,16 @@ import {
   Reface,
   RESPONSE,
   twa,
-} from "jsr:@vseplet/reface@^0.0.18";
+} from "jsr:@vseplet/reface@^0.0.19";
 
 const kv = await Deno.openKv();
 
-const Row = island<
-  {
-    index: number;
-    key: string[];
-    value: any;
-    versionstamp: string;
-  }
->((props) => {
+const Row = island<{
+  index: number;
+  key: string[];
+  value: unknown;
+  versionstamp: string;
+}>((props) => {
   // deno-fmt-ignore
   return html`
     <tr class="align-middle">
