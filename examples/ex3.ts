@@ -7,10 +7,9 @@ import {
   island,
   POST,
   Reface,
-  render,
   RESPONSE,
   twa,
-} from "jsr:@vseplet/reface@^0.0.17";
+} from "jsr:@vseplet/reface@^0.0.18";
 
 const kv = await Deno.openKv();
 

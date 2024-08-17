@@ -8,7 +8,7 @@ import {
   Reface,
   RESPONSE,
   twa,
-} from "jsr:@vseplet/reface@^0.0.17";
+} from "jsr:@vseplet/reface@^0.0.18";
 
 import { sh } from "jsr:@vseplet/shelly@^0.1.12";
 

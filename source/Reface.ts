@@ -12,6 +12,7 @@ export class Reface {
   private router = new Hono();
   private layout: Layout;
 
+  static islandsCount = 0;
   static islandApiHandlers: Record<string, ApiHandlers> = {};
   static islandTemplateGenerators: Record<
     string,
@@ -22,7 +23,7 @@ export class Reface {
     templater: TemplaterGenerator<any>,
     api?: ApiHandlers,
   ): string {
-    const name = crypto.randomUUID();
+    const name = `c${this.islandsCount++}`;
     this.islandTemplateGenerators[name] = templater;
     if (api) {
       this.islandApiHandlers[name] = api;
