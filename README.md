@@ -82,7 +82,7 @@ import {
   Reface,
   RESPONSE,
   twa,
-} from "jsr:@vseplet/reface@0.0.19";
+} from "jsr:@vseplet/reface@0.0.20";
 ```
 
 Here is a simple example of a function that can "call" sh with a certain set of
