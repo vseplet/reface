@@ -2,6 +2,12 @@
 
 [![JSR](https://jsr.io/badges/@vseplet/reface)](https://jsr.io/@vseplet/reface)
 
+## 👋 👋 ATTENTION!
+
+> This package is under development and will be frequently updated. The author
+> would appreciate any help, advice, and pull requests! Thank you for your
+> understanding 😊
+
 **Reface** is a web framework designed for creating
 [Hypermedia-Driven Applications](https://htmx.org/essays/hypermedia-driven-applications/)
 without a build step, based on HTMX.
