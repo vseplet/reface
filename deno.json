@@ -19,14 +19,16 @@
     "./types": "./source/types.ts"
   },
   "imports": {
-    "$types": "./source/types.ts",
     "$/": "./source/",
-    "@hono/hono": "jsr:@hono/hono@4.5.0",
+    "$types": "./source/types.ts",
+    "@hono/hono": "jsr:@hono/hono@4.5.6",
+    "@oak/oak": "jsr:@oak/oak@16.1.0",
     "@std/assert": "jsr:@std/assert@^1.0.1",
-    "@std/crypto": "jsr:@std/crypto@^1.0.2"
+    "@std/crypto": "jsr:@std/crypto@^1.0.2",
+    "@vseplet/luminous": "jsr:@vseplet/luminous@^1.0.5"
   },
   "tasks": {
-    "ex1": "deno run --allow-all --watch=./examples/ex1.ts ./examples/ex1.ts",
+    "ex1": "deno run --allow-all --unstable-ffi --watch=./examples/ex1.ts ./examples/ex1.ts",
     "ex2": "deno run --allow-all --watch=./examples/ex2.ts ./examples/ex2.ts",
     "ex3": "deno run --allow-all --unstable-kv --watch=./examples/ex3.ts ./examples/ex3.ts",
     "ex4": "deno run --allow-all --watch=./examples/ex4.ts ./examples/ex4.ts",
