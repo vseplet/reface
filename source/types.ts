@@ -41,6 +41,7 @@ export type LayoutOptions = {
     async?: boolean;
     crossorigin?: string;
   }[];
+  head?: string;
 };
 
 export type ResourceScriptOptions = {};
@@ -66,3 +67,32 @@ export type TemplaterGenerator<T> = (props: T) => Template;
 export type IslandProps<T> = {
   api: string;
 } & T;
+
+export type RpcDefinition = { [key: string]: any };
+
+export type RpcCalls<R> = {
+  hx: {
+    [key in keyof R]: (args?: R[key]) => string;
+  };
+  // hs: {};
+  // alpine: {};
+  // js: {};
+};
+
+export type RpcHandlers<R> = {
+  [key in keyof R]: (
+    _: { args: R[key] },
+  ) => Promise<{
+    html?: string;
+    status?: number;
+  }>;
+};
+
+export type IslandBody<P, R> = {
+  name?: string;
+  template: (
+    { rpc, props, api }: { rpc: RpcCalls<R>; props: P; api: string },
+  ) => Template;
+  rpc?: RpcHandlers<R>;
+  api?: ApiHandlers;
+};

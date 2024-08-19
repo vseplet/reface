@@ -1,5 +1,9 @@
 export const htmx = `<script src="https://unpkg.com/htmx.org@2.0.1"></script>`;
 
+export const jsonEnc =
+  `<script src="https://unpkg.com/htmx-ext-json-enc@2.0.1/json-enc.js"></script>
+`;
+
 export const hyperscript =
   `<script src="https://unpkg.com/hyperscript.org@0.9.12"></script>`;
 

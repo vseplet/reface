@@ -1,15 +1,15 @@
+import { Hono } from "jsr:@hono/hono@4.5.6";
 import {
   component,
   DELETE,
   GET,
-  Hono,
   html,
   island,
   POST,
   Reface,
   RESPONSE,
   twa,
-} from "jsr:@vseplet/reface@^0.0.19";
+} from "jsr:@vseplet/reface@0.0.20";
 
 const kv = await Deno.openKv();
 
@@ -58,21 +58,19 @@ const ListOfEntries = island((props) => {
       <tbody hx-get="${props.api}/entries" hx-trigger="load, every 2s" hx-target="this" style="overflow-y: auto;">
       </tbody>
     </table>
-
   `;
 }, {
-  [GET("/entries")]: async (props) => {
-    const allEntries = await Array.fromAsync(kv.list({ prefix: [] }));
-    // deno-fmt-ignore
+  [GET("/entries")]: async () => {
     return RESPONSE(
-      allEntries.map((entry, index) =>
-        Row({
-          index: index + 1,
-          key: entry.key as string[],
-          value: entry.value,
-          versionstamp: entry.versionstamp,
-        })
-      )
+      (await Array.fromAsync(kv.list({ prefix: [] })))
+        .map((entry, index) =>
+          Row({
+            index: index + 1,
+            key: entry.key as string[],
+            value: entry.value,
+            versionstamp: entry.versionstamp,
+          })
+        ),
     );
   },
 });

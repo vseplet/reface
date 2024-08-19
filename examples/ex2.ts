@@ -1,14 +1,14 @@
+import { Hono } from "jsr:@hono/hono@4.5.6";
 import {
   component,
   GET,
-  Hono,
   html,
   island,
   type PageProps,
   Reface,
   RESPONSE,
   twa,
-} from "jsr:@vseplet/reface@^0.0.19";
+} from "jsr:@vseplet/reface@^0.0.20";
 
 import { sh } from "jsr:@vseplet/shelly@^0.1.12";
 

@@ -1,6 +1,6 @@
+import { Hono } from "jsr:@hono/hono@4.5.6";
 import {
   GET,
-  Hono,
   html,
   island,
   type PageProps,
@@ -9,7 +9,7 @@ import {
   RESPONSE,
   salt,
   twa,
-} from "jsr:@vseplet/reface@^0.0.19";
+} from "jsr:@vseplet/reface@^0.0.20";
 
 const Joke = island<{ interval: number }>((props) => {
   const id = salt();
