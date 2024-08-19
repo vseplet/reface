@@ -1,7 +1,7 @@
 {
   "lock": false,
   "name": "@vseplet/reface",
-  "version": "0.0.20",
+  "version": "0.0.21",
   "workflows": {
     "UpdateSemverDeployJsr": {
       "versionsFilePath": "./source/versions.ts"
