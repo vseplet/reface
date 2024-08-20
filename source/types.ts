@@ -1,11 +1,6 @@
-export type BaseAppOptions = {
-  baseUrl?: string;
-  staticPath?: string;
-};
+export type Layout = (page: string) => string;
 
-export type Layout = (page: string, appOptions: BaseAppOptions) => string;
-
-export type ApiRequest = {
+export type RefaceRequest = {
   api: string;
   route: string;
   params: { [x: string]: string };
@@ -14,16 +9,19 @@ export type ApiRequest = {
   formData: FormData;
 };
 
-export type ApiResponse = {
+export type RefaceResponse = {
   html?: string;
   status?: number;
 };
 
-export type ApiHandlers = {
-  [method: string]: ApiHandler;
+export type RestHandlers = {
+  [method: string]: RestHandler;
 };
 
-export type ApiHandler = (req: ApiRequest) => Promise<ApiResponse>;
+export type RestHandler = (
+  req: RefaceRequest,
+  // log: (...args: any[]) => void; TODO: add luminous logger
+) => Promise<RefaceResponse>;
 
 export type LayoutOptions = {
   title?: string;
@@ -44,9 +42,6 @@ export type LayoutOptions = {
   head?: string;
 };
 
-export type ResourceScriptOptions = {};
-export type ResourceStyleOptions = {};
-
 export type PageProps = {
   route: string;
   params: {
@@ -64,10 +59,6 @@ export type Template = {
 
 export type TemplaterGenerator<T> = (props: T) => Template;
 
-export type IslandProps<T> = {
-  api: string;
-} & T;
-
 export type RpcDefinition = { [key: string]: any };
 
 export type RpcCalls<R> = {
@@ -81,18 +72,35 @@ export type RpcCalls<R> = {
 
 export type RpcHandlers<R> = {
   [key in keyof R]: (
-    _: { args: R[key] },
+    _: {
+      args: R[key];
+      // req: RefaceRequest; TODO: add req
+      // log: (...args: any[]) => void; TODO: add luminous logger
+    },
   ) => Promise<{
     html?: string;
     status?: number;
   }>;
 };
 
-export type IslandBody<P, R> = {
+export type Island<P, R> = {
   name?: string;
   template: (
-    { rpc, props, api }: { rpc: RpcCalls<R>; props: P; api: string },
+    args: {
+      props: P;
+      rpc: RpcCalls<R>;
+      // log: (...args: any[]) => void; TODO: add luminous logger
+      rest: {
+        hx: (
+          name: string | "self",
+          method: "get" | "post" | "put" | "delete" | "patch",
+          route: string,
+        ) => string;
+      };
+      partial?: (name: string) => string; // TODO: add partial
+      island?: (name: string) => string; // TODO: add island
+    },
   ) => Template;
   rpc?: RpcHandlers<R>;
-  api?: ApiHandlers;
+  rest?: RestHandlers;
 };

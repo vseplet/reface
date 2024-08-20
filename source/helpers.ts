@@ -1,4 +1,4 @@
-import type { ApiResponse, Layout, LayoutOptions, Template } from "$types";
+import type { Layout, LayoutOptions, RefaceResponse, Template } from "$types";
 
 export const html = (
   str: TemplateStringsArray,
@@ -43,7 +43,7 @@ export const DELETE = (path: string) => `delete|${path}`;
 export const RESPONSE = (
   html?: string | Template | Array<Template | any>,
   status?: number,
-): ApiResponse => {
+): RefaceResponse => {
   if (
     html && (typeof html === "object" && "isTemplate" in html) ||
     Array.isArray(html)

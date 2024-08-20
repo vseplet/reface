@@ -1,4 +1,4 @@
-import type { IslandBody, RpcDefinition, TemplaterGenerator } from "$/types.ts";
+import type { Island, RpcDefinition, TemplaterGenerator } from "$/types.ts";
 
 import { Reface } from "./Reface.ts";
 
@@ -10,8 +10,8 @@ const island = <
   P,
   R extends RpcDefinition = { [key: string]: any },
 >(
-  _: IslandBody<P, R>,
-): TemplaterGenerator<P> => Reface.addNewIsland(_);
+  _: Island<P, R>,
+): TemplaterGenerator<P> => Reface.addIsland(_);
 
 export { component, island, Reface };
 export * from "$/helpers.ts";

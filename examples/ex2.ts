@@ -1,5 +1,6 @@
 import { Hono } from "jsr:@hono/hono@4.5.6";
 import {
+  clean,
   component,
   GET,
   html,
@@ -7,8 +8,7 @@ import {
   type PageProps,
   Reface,
   RESPONSE,
-  twa,
-} from "jsr:@vseplet/reface@^0.0.20";
+} from "jsr:@vseplet/reface@^0.0.22";
 
 import { sh } from "jsr:@vseplet/shelly@^0.1.12";
 
@@ -28,7 +28,7 @@ const DirLink = component<{ to: string; api: string; name: string }>(
 
 const FileLink = component<{ to: string; api: string; name: string }>(
   // deno-fmt-ignore
-  (props) =>html`
+  (props) => html`
     <div>
       <a
         style="color: green;"
@@ -88,68 +88,73 @@ const TreeView = component<
 );
 
 // deno-fmt-ignore
-const Monitor = island<PageProps>((props) => html`
-  <div class="container mt-5">
-    <div class="row">
-      <div class="col-md-12">
-        <div class="border p-3 h-100">
-          <strong>Processes List</strong> (update every 2s: 'ps -A -o %cpu,pid,comm | sort -nr | head -10')
-          <hr class="my-2">
-          <div hx-get="${props.api}/proc"
-            hx-trigger="load, every 2s"
-            hx-target="this"
-            hx-swap="innerHTML">
+const Monitor = island<PageProps>({
+  template: ({ rest}) => html`
+    <div class="container mt-5">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="border p-3 h-100">
+            <strong>Processes List</strong> (update every 2s: 'ps -A -o %cpu,pid,comm | sort -nr | head -10')
+            <hr class="my-2">
+            <div ${rest.hx("self", "get", "/proc")}
+              hx-trigger="load, every 2s"
+              hx-target="this"
+              hx-swap="innerHTML">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row mt-3">
+        <div class="col-md-6">
+          <div class="border p-3 h-100">
+            <div
+              id="dir-view"
+              ${rest.hx("self", "get", "/dir")}
+              hx-vals=${JSON.stringify({ to: Deno.cwd() })}
+              hx-trigger="load"
+              hx-target="this">
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="border p-3 h-100">
+            <div id="file-view"></div>
           </div>
         </div>
       </div>
     </div>
-    <div class="row mt-3">
-      <div class="col-md-6">
-        <div class="border p-3 h-100">
-          <div
-            id="dir-view"
-            hx-get="${props.api}/dir"
-            hx-vals=${JSON.stringify({ to: Deno.cwd() })}
-            hx-trigger="load"
-            hx-target="this">
-          </div>
-        </div>
+  `,
+  rest: {
+    [GET("/dir")]: async (req) => RESPONSE(
+      TreeView({
+        to: req.query.to,
+        api: req.api,
+        route: req.route,
+        current: req.query.current,
+      })
+    ),
+    [GET("/file")]: async (req) => RESPONSE(html`
+      <div>
+        <strong>${req.query.path}</strong>
+        <hr class="my-2">
+        <pre>${Deno.readTextFileSync(req.query.path)}</pre>
       </div>
-      <div class="col-md-6">
-        <div class="border p-3 h-100">
-          <div id="file-view"></div>
-        </div>
-      </div>
-    </div>
-  </div>`, {
-  [GET("/dir")]: async (req) => RESPONSE(
-    TreeView({
-      to: req.query.to,
-      api: req.api,
-      route: req.route,
-      current: req.query.current,
-    })
-  ),
-  [GET("/file")]: async (req) => RESPONSE(html`
-    <div>
-      <strong>${req.query.path}</strong>
-      <hr class="my-2">
-      <pre>${Deno.readTextFileSync(req.query.path)}</pre>
-    </div>
-  `),
-  [GET("/proc")]: async (req) => RESPONSE(html`
-    <pre>${(await sh("ps -A -o %cpu,pid,comm | sort -nr | head -10")).stdout}</pre>
-  `),
+    `),
+    [GET("/proc")]: async (req) => RESPONSE(html`
+      <pre>${(await sh("ps -A -o %cpu,pid,comm | sort -nr | head -10")).stdout}</pre>
+    `),
+  }
 });
 
-Deno.serve(
-  new Hono().route(
-    "/",
-    new Reface({
-      layout: twa({
-        htmx: true,
-        bootstrap: true,
-      }),
-    }).page("/", Monitor).getRouter(),
-  ).fetch,
+const app = new Hono().route(
+  "/",
+  new Reface({
+    layout: clean({
+      htmx: true,
+      jsonEnc: true,
+      bootstrap: true,
+    }),
+  }).page("/", Monitor).hono(),
 );
+
+Deno.serve(app.fetch);

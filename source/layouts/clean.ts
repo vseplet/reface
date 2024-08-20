@@ -1,5 +1,4 @@
 // deno-lint-ignore-file no-unused-vars
-import type { BaseAppOptions } from "$types";
 import { layout } from "$/helpers.ts";
 import { alpinejs, htmx, hyperscript, jsonEnc } from "$/resources/scripts.ts";
 import { bootstrapIcons } from "$/resources/icons.ts";
@@ -19,7 +18,7 @@ export const clean = layout<{
   jsonEnc?: boolean;
   bluma?: boolean;
 }>((options) => {
-  return (page: string, appOptions: BaseAppOptions) => {
+  return (page: string) => {
     return `
       <html>
         <head>

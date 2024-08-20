@@ -4,18 +4,25 @@ import {
   component,
   html,
   island,
-  Reface as Magic,
+  Reface,
   RESPONSE,
-} from "jsr:@vseplet/reface@^0.0.20";
+} from "jsr:@vseplet/reface@^0.0.22";
 
-const OutputBlock = component<{ out: string; err?: string; code?: number }>((
-  props,
-) =>
+const OutputBlock = component<{
+  out: string;
+  err: string;
+  code: number;
+  // deno-fmt-ignore
+}>((props) =>
   html`
-  <div class="p-1 my-1">
-    <pre>${props.out}</pre>
-  </div>
-`
+    <div class="p-1 my-1">
+      ${
+    props.code
+      ? html`<pre class="text-danger">${props.err}</pre>`
+      : html`<pre>${props.out}</pre>`
+  }
+    </div>
+  `
 );
 
 const sh = async (command: string) => {
@@ -70,7 +77,7 @@ const Entry = component(() => html`
 
 const app = new Hono().route(
   "/",
-  new Magic({ layout: clean({ htmx: true, jsonEnc: true, bootstrap: true }) })
+  new Reface({ layout: clean({ htmx: true, jsonEnc: true, bootstrap: true }) })
     .page("/", Entry)
     .hono(),
 );

@@ -8,7 +8,6 @@ import {
 } from "$/resources/scripts.ts";
 import { bluma, bootstrap } from "$/resources/styles.ts";
 import { bootstrapIcons } from "$/resources/icons.ts";
-import type { BaseAppOptions } from "$types";
 import { layout } from "$/helpers.ts";
 
 /**
@@ -25,7 +24,7 @@ export const twa = layout<{
   jsonEnc?: boolean;
   bluma?: boolean;
 }>((options) => {
-  return (page: string, appOptions: BaseAppOptions) => {
+  return (page: string) => {
     return `
       <html>
       <head>

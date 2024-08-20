@@ -1,23 +1,22 @@
 // deno-lint-ignore-file require-await no-explicit-any
 import type {
-  ApiHandlers,
-  ApiRequest,
-  IslandBody,
+  Island,
   Layout,
   PageProps,
+  RefaceRequest,
+  RestHandlers,
   RpcCalls,
   RpcHandlers,
   TemplaterGenerator,
 } from "$types";
 
 import { type Context, Hono } from "@hono/hono";
-import { Router as OakRouter } from "@oak/oak/router";
 import { render } from "$/helpers.ts";
 
 export class Reface {
   private layout: Layout;
   private static islandsCount = 0;
-  private static islandApiHandlers: Record<string, ApiHandlers> = {};
+  private static islandRestHandlers: Record<string, RestHandlers> = {};
   private static islandTemplateGenerators: Record<
     string,
     TemplaterGenerator<any>
@@ -26,24 +25,24 @@ export class Reface {
 
   private pages: Record<string, any> = {};
 
-  static addIsland(
-    templater: TemplaterGenerator<any>,
-    api?: ApiHandlers,
-  ): string {
-    const name = `c${this.islandsCount++}`;
-    this.islandTemplateGenerators[name] = templater;
+  // static addIsland(
+  //   templater: TemplaterGenerator<any>,
+  //   api?: RestHandlers,
+  // ): string {
+  //   const name = `c${this.islandsCount++}`;
+  //   this.islandTemplateGenerators[name] = templater;
 
-    if (api) {
-      this.islandApiHandlers[name] = api;
-    }
-    return name;
-  }
+  //   if (api) {
+  //     this.islandRestHandlers[name] = api;
+  //   }
+  //   return name;
+  // }
 
-  static addNewIsland<P, R>(body: IslandBody<P, R>) {
+  static addIsland<P, R>(body: Island<P, R>) {
     const name = body.name || `c${this.islandsCount++}`;
 
-    if (body.api) {
-      this.islandApiHandlers[name] = body.api;
+    if (body.rest) {
+      this.islandRestHandlers[name] = body.rest;
     }
 
     const rpc: RpcCalls<any> = { hx: {} };
@@ -61,7 +60,13 @@ export class Reface {
       body.template({
         rpc,
         props,
-        api: `/api/${name}`,
+        // api: `/api/${name}`,
+        rest: {
+          hx: (islandName, method, route: string) =>
+            islandName === "self"
+              ? `hx-${method}='/api/${name}${route}'`
+              : `hx-${method}='/api/${islandName}${route}'`,
+        },
       });
   }
 
@@ -82,13 +87,14 @@ export class Reface {
         headers: c.req.header(),
       });
       const html = render(template);
-      return c.html(this.layout(html, {}));
+      return c.html(this.layout(html));
     };
 
     return this;
   }
 
   partial(route: string, generate: TemplaterGenerator<any>): Reface {
+    throw new Error("Not implemented");
     // this.router.get(`/partial${route}`, async (c: Context) => {
     //   const template = generate({
     //     /* TODO: подумать, что сюда можно запихнуть */
@@ -109,8 +115,8 @@ export class Reface {
       router.get(route, handler);
     }
     // create partial routes
-    // create api routes
-    for (const [name, handlers] of Object.entries(Reface.islandApiHandlers)) {
+    // create rest routes
+    for (const [name, handlers] of Object.entries(Reface.islandRestHandlers)) {
       for (const [str, handler] of Object.entries(handlers)) {
         const [method, path] = str.split("|");
         const route = `/api/${name}${path}`;
@@ -126,7 +132,7 @@ export class Reface {
               ? await c.req.formData()
               : new FormData();
 
-            const request: ApiRequest = {
+            const request: RefaceRequest = {
               api,
               route,
               params: c.req.param(),
@@ -159,7 +165,11 @@ export class Reface {
     return router;
   }
 
-  makeOakRouter() {
-    const router = new OakRouter();
+  oak() {
+    throw new Error("Not implemented");
+  }
+
+  express() {
+    throw new Error("Not implemented");
   }
 }
