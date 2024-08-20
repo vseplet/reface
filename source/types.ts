@@ -65,9 +65,6 @@ export type RpcCalls<R> = {
   hx: {
     [key in keyof R]: (args?: R[key]) => string;
   };
-  // hs: {};
-  // alpine: {};
-  // js: {};
 };
 
 export type RpcHandlers<R> = {
