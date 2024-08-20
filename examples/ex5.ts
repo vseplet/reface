@@ -10,7 +10,11 @@ import {
 } from "@vseplet/reface";
 
 const StyledDiv = inlineStyle<{ primary: boolean }>((props) =>
-  css`color: ${props.primary ? "red" : "blue"}`
+  css`
+    color: ${props.primary ? "red" : "blue"};
+    border: 1px solid ${props.primary ? "orange" : "green"};
+    padding: 10px;
+  `
 );
 
 const RandomJoke = island<{}, { joke: null }>({
