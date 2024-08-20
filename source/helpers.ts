@@ -1,10 +1,25 @@
-import type { Layout, LayoutOptions, RefaceResponse, Template } from "$types";
+import type {
+  Layout,
+  LayoutOptions,
+  RefaceResponse,
+  Style,
+  Template,
+} from "$types";
 
 export const html = (
   str: TemplateStringsArray,
   ...args: any[]
 ) => ({
   isTemplate: true,
+  str,
+  args,
+});
+
+export const css = (
+  str: TemplateStringsArray,
+  ...args: any[]
+): Style => ({
+  isStyle: true,
   str,
   args,
 });
@@ -53,6 +68,7 @@ export const RESPONSE = (
       status,
     };
   }
+
   return {
     html: typeof html === "string" ? html : undefined,
     status,

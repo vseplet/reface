@@ -56,7 +56,7 @@ export const Hero = component(() => html`
       <br>
       <h5 class="text-end" style="color: #2ca02c;">Use Reface:</h5>
       <br>
-      <pre class="rounded" hx-disable style="background-color: #f8f9fa;"><code class="language-typescript">${example}</code></pre>
+      <pre class="rounded" hx-disable style="background-color: #f8f9fa; overflow: auto; height: 500px;"><code class="language-typescript">${example}</code></pre>
       <br>
       <h5 style="color: #ff7f0e;">Is that it? Seriously?</h5>
       <br>

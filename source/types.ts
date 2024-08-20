@@ -57,6 +57,12 @@ export type Template = {
   args: Array<any | Template>;
 };
 
+export type Style = {
+  isStyle: boolean;
+  str: TemplateStringsArray;
+  args: Array<any | Template>;
+};
+
 export type TemplaterGenerator<T> = (props: T) => Template;
 
 export type RpcDefinition = { [key: string]: any };
