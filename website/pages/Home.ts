@@ -3,8 +3,7 @@ import { RandomJoke } from "$/components/RandomJoke.ts";
 
 export const Home = component((props: PageProps) =>
   html`
-    <div class="container grid my-3">
-      <h1>Hello, Reface!</h1>
+    <div class="container d-flex my-3 h-100 justify-content-center align-items-center">
       <pre>${RandomJoke({ interval: 5 })}</pre>
     </div>
   `

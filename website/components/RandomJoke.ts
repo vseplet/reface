@@ -9,7 +9,7 @@ export const RandomJoke = island<{ interval: number }>({
         hx-trigger="load, every ${props.interval}s"
         hx-target="#${id}"
         hx-swap="innerHTML">
-        <h2 id="${id}"></h2>
+        <h4 id="${id}"></h4>
       </div>
     `;
   },

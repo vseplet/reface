@@ -12,9 +12,10 @@
 
 ---
 
-**Reface** is a web framework designed for creating
+**[Reface](https://reface.deno.dev/)** is a embeddable fullstack framework
+designed for creating
 [Hypermedia-Driven Applications](https://htmx.org/essays/hypermedia-driven-applications/)
-without a build step, based on HTMX.
+without a build step, based on [HTMX](https://htmx.org/).
 
 In this tool, I strive to combine the power of SSR, SPA, and islands-based
 architecture while using plain HTML, CSS, and JS. I came up with the idea for

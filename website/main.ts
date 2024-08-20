@@ -1,6 +1,7 @@
 import { Hono } from "@hono/hono";
 import { clean, Reface } from "@vseplet/reface";
 import { Home } from "$/pages/Home.ts";
+import { PageWrapper } from "$/PageWrapper.ts";
 
 const app = new Hono();
 const pages = new Reface({
@@ -9,7 +10,7 @@ const pages = new Reface({
     bootstrap: true,
   }),
 })
-  .page("/", Home)
+  .page("/", PageWrapper(Home))
   .hono();
 
 app.route("/", pages);
