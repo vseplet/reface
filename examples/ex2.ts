@@ -8,7 +8,7 @@ import {
   type PageProps,
   Reface,
   RESPONSE,
-} from "jsr:@vseplet/reface@^0.0.22";
+} from "@vseplet/reface";
 
 import { sh } from "jsr:@vseplet/shelly@^0.1.12";
 

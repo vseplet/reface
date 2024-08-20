@@ -1,6 +1,8 @@
 # Reface
 
 [![JSR](https://jsr.io/badges/@vseplet/reface)](https://jsr.io/@vseplet/reface)
+[![JSR Score](https://jsr.io/badges/@vseplet/reface/score)](https://jsr.io/@vseplet/reface)
+[![Discord](https://img.shields.io/badge/join-chat-blue?logo=discord&logoColor=white)](https://discord.gg/gT4gvVwqb8)
 
 ## 👋 👋 ATTENTION!
 
@@ -118,15 +120,18 @@ output:
 ```ts
 const OutputBlock = component<{
   out: string;
-  err?: string;
-  code?: number;
+  err: string;
+  code: number;
   // deno-fmt-ignore
 }>((props) =>
   html`
-    <div class="p-1 my-1">
-      <pre>${props.out}</pre>
-    </div>
-  `
+  <div class="p-1 my-1">
+    ${
+    props.code
+      ? html`<pre class="text-danger">${props.err}</pre>`
+      : html`<pre>${props.out}</pre>`
+  }
+  </div>`
 );
 ```
 
