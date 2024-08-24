@@ -10,7 +10,8 @@ import {
 } from "@vseplet/reface";
 
 const StyledDiv = inlineStyle<{ primary: boolean }>(
-  (props) => css`
+  (props) =>
+    css`
     color: ${props.primary ? "red" : "blue"};
     border: 1px solid ${props.primary ? "orange" : "green"};
     padding: 10px;

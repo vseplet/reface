@@ -14,9 +14,10 @@ const component = <T>(generate: TemplaterGenerator<T>): TemplaterGenerator<T> =>
 
 // function island<P>(_: Island2<P, NRpcHandlers>): TemplaterGenerator<{}>;
 
-function island<P, R extends NRpcHandlers>(
-  _: Island2<P, R>,
-): TemplaterGenerator<P> {
+function island<
+  P,
+  R extends NRpcHandlers = Record<string, (args: any) => Promise<any>>,
+>(_: Island2<P, R>): TemplaterGenerator<P> {
   return Reface.addIsland(_);
 }
 
