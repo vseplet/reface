@@ -36,7 +36,7 @@ const sh = async (command: string) => {
   };
 };
 
-const CommandInput = island<{}, { exec: { command: string } }>({
+const CommandInput = island({
   name: "CommandInput",
   // deno-fmt-ignore
   template:({ rpc }) => html`
@@ -59,7 +59,8 @@ const CommandInput = island<{}, { exec: { command: string } }>({
     </form>
   `,
   rpc: {
-    exec: async ({ args }) => RESPONSE(OutputBlock(await sh(args.command))),
+    exec: async (args: { command: string }) =>
+      RESPONSE(OutputBlock(await sh(args.command))),
   },
 });
 

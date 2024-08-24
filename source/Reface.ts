@@ -1,6 +1,7 @@
 // deno-lint-ignore-file require-await no-explicit-any
 import type {
   Island,
+  Island2,
   Layout,
   PageProps,
   RefaceRequest,
@@ -38,7 +39,7 @@ export class Reface {
   //   return name;
   // }
 
-  static addIsland<P, R>(body: Island<P, R>) {
+  static addIsland<P, R>(body: Island2<P, R>) {
     const name = body.name || `c${this.islandsCount++}`;
 
     if (body.rest) {

@@ -73,6 +73,12 @@ export type RpcCalls<R> = {
   };
 };
 
+export type RpcCalls2<R extends NRpcHandlers> = {
+  hx: {
+    [key in keyof R]: (args?: Partial<Parameters<R[key]>[0]>) => string;
+  };
+};
+
 export type RpcHandlers<R> = {
   [key in keyof R]: (
     _: {
@@ -84,6 +90,41 @@ export type RpcHandlers<R> = {
     html?: string;
     status?: number;
   }>;
+};
+
+export type NRpcHandlers = {
+  [key: string]: (
+    _: any,
+  ) => Promise<{
+    html?: string;
+    status?: number;
+  }>;
+};
+
+export type Island2<P, R extends NRpcHandlers> = {
+  name?: string;
+  template: (
+    args: {
+      props: P;
+      rpc: {
+        hx: {
+          [key in keyof R]: (args?: Partial<Parameters<R[key]>[0]>) => string;
+        };
+      };
+      // log: (...args: any[]) => void; TODO: add luminous logger
+      rest: {
+        hx: (
+          name: string | "self",
+          method: "get" | "post" | "put" | "delete" | "patch",
+          route: string,
+        ) => string;
+      };
+      partial?: (name: string) => string; // TODO: add partial
+      island?: (name: string) => string; // TODO: add island
+    },
+  ) => Template;
+  rpc?: R;
+  rest?: RestHandlers;
 };
 
 export type Island<P, R> = {

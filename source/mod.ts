@@ -1,5 +1,7 @@
 import type {
   Island,
+  Island2,
+  NRpcHandlers,
   RpcDefinition,
   Style,
   TemplaterGenerator,
@@ -7,16 +9,16 @@ import type {
 
 import { Reface } from "./Reface.ts";
 
-const component = <T>(
-  generate: TemplaterGenerator<T>,
-): TemplaterGenerator<T> => generate;
+const component = <T>(generate: TemplaterGenerator<T>): TemplaterGenerator<T> =>
+  generate;
 
-const island = <
-  P,
-  R extends RpcDefinition = { [key: string]: any },
->(
-  _: Island<P, R>,
-): TemplaterGenerator<P> => Reface.addIsland(_);
+// function island<P>(_: Island2<P, NRpcHandlers>): TemplaterGenerator<{}>;
+
+function island<P, R extends NRpcHandlers>(
+  _: Island2<P, R>,
+): TemplaterGenerator<P> {
+  return Reface.addIsland(_);
+}
 
 export const inlineStyle = <P = undefined>(
   _: P extends undefined ? () => Style : (prop: P) => Style,

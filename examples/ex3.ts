@@ -15,8 +15,6 @@ const Row = island<{
   key: string[];
   value: unknown;
   versionstamp: string;
-}, {
-  remove: { key: string };
 }>({
   template: ({ props, rpc }) => {
     // deno-fmt-ignore
@@ -38,7 +36,7 @@ const Row = island<{
     `
   },
   rpc: {
-    remove: async ({ args }) => {
+    remove: async (args: { key: string }) => {
       const key = args.key.split("|");
       await kv.delete(key);
       return RESPONSE(
@@ -48,7 +46,7 @@ const Row = island<{
   },
 });
 
-const ListOfEntries = island<{ interval: number }, { entries: null }>({
+const ListOfEntries = island<{ interval: number }>({
   template: ({ rpc, props }) => {
     return html`
       <table class="table">
@@ -85,10 +83,7 @@ const Alert = (type: "success" | "danger" | "warning", message: string) => {
   return html`<div class="alert alert-${type}" role="alert" _="on load wait 4s then remove me">${message}</div>`;
 };
 
-const SubmitValue = island<
-  { alertsId: string },
-  { submit: { key: string; value: string; isJSON: string } }
->({
+const SubmitValue = island<{ alertsId: string }>({
   template: ({ rpc, props }) => {
     return html`
       <form ${rpc.hx.submit()} hx-target="#${props.alertsId}" class="form-group">
@@ -113,7 +108,7 @@ const SubmitValue = island<
     `;
   },
   rpc: {
-    submit: async ({ args }) => {
+    submit: async (args: { key: string; value: string; isJSON: string }) => {
       try {
         const isJSON = args.isJSON === "on";
         const key = args.key.split(" ");

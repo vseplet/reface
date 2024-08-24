@@ -2,6 +2,7 @@
   "lock": false,
   "name": "@vseplet/reface",
   "version": "0.0.24",
+  "licence": "MIT",
   "workflows": {
     "UpdateSemverDeployJsr": {
       "versionsFilePath": "./source/versions.ts"
@@ -36,8 +37,6 @@
     "pub-dry": "deno publish --dry-run --allow-slow-types"
   },
   "fmt": {
-    "exclude": [
-      "./source/versions.ts"
-    ]
+    "exclude": ["./source/versions.ts"]
   }
 }
