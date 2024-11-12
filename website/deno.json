@@ -2,8 +2,8 @@
   "lock": false,
   "imports": {
     "$/": "./",
-    "@hono/hono": "jsr:@hono/hono@^4.5.6",
-    "@vseplet/reface": "jsr:@vseplet/reface@^0.0.22"
+    "@hono/hono": "jsr:@hono/hono@4.5.6",
+    "@vseplet/reface": "jsr:@vseplet/reface@0.0.24"
   },
   "tasks": {
     "dev": "deno run --watch=./main.ts --allow-all main.ts"

@@ -6,7 +6,7 @@ import {
   island,
   Reface,
   RESPONSE,
-} from "@vseplet/reface";
+} from "jsr:@vseplet/reface@0.0.24";
 
 const OutputBlock = component<{
   out: string;

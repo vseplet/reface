@@ -1,21 +1,5 @@
 import { Hono } from "jsr:@hono/hono@4.5.6";
-import {
-  clean,
-  css,
-  html,
-  inlineStyle,
-  island,
-  Reface,
-  RESPONSE,
-} from "jsr:@vseplet/reface@0.0.24";
-
-const StyledDiv = inlineStyle<{ primary: boolean }>((props) =>
-  css`
-    color: ${props.primary ? "red" : "blue"};
-    border: 1px solid ${props.primary ? "orange" : "green"};
-    padding: 10px;
-  `
-);
+import { clean, html, island, Reface, RESPONSE } from "jsr:@vseplet/reface@0.0.24";
 
 const RandomJoke = island<{}, { joke: null }>({
   template: ({ rpc }) => {
@@ -37,7 +21,7 @@ const RandomJoke = island<{}, { joke: null }>({
       )).text();
 
       return RESPONSE(html`
-        <div ${StyledDiv({ primary: Math.random() > 0.5 })}>
+        <div>
           ${text}
         </div>
       `);
@@ -45,17 +29,19 @@ const RandomJoke = island<{}, { joke: null }>({
   },
 });
 
+const pageRouter = new Reface({
+  layout: clean({
+    htmx: true,
+    jsonEnc: true,
+  }),
+})
+  .page("/", RandomJoke)
+  .hono();
+
 Deno.serve(
   new Hono()
     .route(
       "/",
-      new Reface({
-        layout: clean({
-          htmx: true,
-          jsonEnc: true,
-        }),
-      })
-        .page("/", RandomJoke)
-        .hono(),
+      pageRouter,
     ).fetch,
 );

@@ -9,7 +9,7 @@ import {
   Reface,
   RESPONSE,
   salt,
-} from "@vseplet/reface";
+} from "jsr:@vseplet/reface@0.0.24";
 
 const RandomJoke = island<{ interval: number }>({
   template: ({ props, rest }) => {

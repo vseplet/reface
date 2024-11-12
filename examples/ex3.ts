@@ -6,7 +6,7 @@ import {
   island,
   Reface,
   RESPONSE,
-} from "@vseplet/reface";
+} from "jsr:@vseplet/reface@0.0.24";
 
 const kv = await Deno.openKv();
 
@@ -126,8 +126,8 @@ const SubmitValue = island<
         } else {
           return RESPONSE(Alert("danger", "Value not submitted"));
         }
-      } catch (e) {
-        return RESPONSE(Alert("danger", e.toString()));
+      } catch (e: unknown) {
+        return RESPONSE(Alert("danger", e instanceof Error ? e.message : "Unknown error"));
       }
     },
   },
