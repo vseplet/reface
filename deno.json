@@ -33,6 +33,7 @@
     "ex3": "deno run --allow-all --unstable-kv --watch=./examples/ex3.ts ./examples/ex3.ts",
     "ex4": "deno run --allow-all --watch=./examples/ex4.ts ./examples/ex4.ts",
     "ex5": "deno run --allow-all --watch=./examples/ex5.ts ./examples/ex5.ts",
+    "ex6": "deno run --allow-all --watch=./examples/ex6.ts ./examples/ex6.ts",
     "pub-dry": "deno publish --dry-run --allow-slow-types"
   },
   "fmt": {

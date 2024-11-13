@@ -3,7 +3,7 @@ import {
   component,
   html,
   island,
-  PageProps,
+  type PageProps,
   Reface,
   RESPONSE,
 } from "@vseplet/reface";
@@ -12,9 +12,9 @@ const cmp1 = component<{ x: number }>((props) =>
   html`<div>Hello, ${props.x} World!</div>`
 );
 
-const cmp2 = component(() => html`<div>Hello, World!</div>`);
+const cmp2 = component<void>(() => html`<div>Hello, World!</div>`);
 
-const isl1 = island<{ joke: null }>({
+const isl1 = island<{ joke: null }, void>({
   template: ({ rpc, props }) => html`<div>Hello, World!</div>`,
   rpc: {
     joke: async () => {
@@ -55,9 +55,9 @@ const page = component<PageProps>(
   (props) =>
     html`
     ${cmp1({ x: 10 })}
-    ${cmp2({})}
+    ${cmp2()}
 
-    ${isl1({})}
+    ${isl1()}
     ${isl2({ x: 10 })}
 `,
 );

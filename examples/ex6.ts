@@ -3,11 +3,12 @@ import {
   clean,
   html,
   island,
+  type PageProps,
   Reface,
   RESPONSE,
-} from "jsr:@vseplet/reface@0.0.24";
+} from "jsr:@vseplet/reface@0.1.24";
 
-const RandomJoke = island<{}, { joke: null }>({
+const RandomJoke = island<{ joke: null }, PageProps>({
   template: ({ rpc }) => {
     return html`
       <div

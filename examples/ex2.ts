@@ -8,7 +8,7 @@ import {
   type PageProps,
   Reface,
   RESPONSE,
-} from "jsr:@vseplet/reface@0.0.24";
+} from "jsr:@vseplet/reface@0.1.24";
 
 import { sh } from "jsr:@vseplet/shelly@^0.1.12";
 
@@ -88,7 +88,7 @@ const TreeView = component<
 );
 
 // deno-fmt-ignore
-const Monitor = island<PageProps>({
+const Monitor = island<{}, PageProps>({
   template: ({ rest}) => html`
     <div class="container mt-5">
       <div class="row">

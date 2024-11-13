@@ -6,17 +6,17 @@ import {
   island,
   Reface,
   RESPONSE,
-} from "jsr:@vseplet/reface@0.0.24";
+} from "jsr:@vseplet/reface@0.1.24";
 
 const kv = await Deno.openKv();
 
 const Row = island<{
+  remove: { key: string };
+}, {
   index: number;
   key: string[];
   value: unknown;
   versionstamp: string;
-}, {
-  remove: { key: string };
 }>({
   template: ({ props, rpc }) => {
     // deno-fmt-ignore
@@ -48,7 +48,7 @@ const Row = island<{
   },
 });
 
-const ListOfEntries = island<{ interval: number }, { entries: null }>({
+const ListOfEntries = island<{ entries: null }, { interval: number }>({
   template: ({ rpc, props }) => {
     return html`
       <table class="table">
@@ -86,8 +86,8 @@ const Alert = (type: "success" | "danger" | "warning", message: string) => {
 };
 
 const SubmitValue = island<
-  { alertsId: string },
-  { submit: { key: string; value: string; isJSON: string } }
+  { submit: { key: string; value: string; isJSON: string } },
+  { alertsId: string }
 >({
   template: ({ rpc, props }) => {
     return html`

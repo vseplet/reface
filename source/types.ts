@@ -64,7 +64,7 @@ export type Style = {
 };
 
 export type TemplateGenerator<T> = (props: T) => Template;
-// export type TemplateGenerator<T = void> = T extends void ? () => Template
+// export type TemplateGenerator<T> = T extends void ? () => Template
 //   : (props: T) => Template;
 
 export type RpcDefinition = { [key: string]: any };
