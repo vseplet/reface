@@ -10,9 +10,9 @@ import {
   html,
   island,
   RESPONSE
-} from "jsr:@vseplet/reface@0.0.23";
+} from "jsr:@vseplet/reface@0.1.0";
 
-const RandomJoke = island<{}, { joke: null }>({
+const RandomJoke = island<{ joke: null }>({
   template: ({ rpc }) => html\`
     &lt;div
       \${rpc.hx.joke()}
