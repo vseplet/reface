@@ -2,21 +2,21 @@ import type {
   Island,
   RpcDefinition,
   Style,
-  TemplaterGenerator,
+  TemplateGenerator,
 } from "$/types.ts";
 
 import { Reface } from "./Reface.ts";
 
 const component = <T>(
-  generate: TemplaterGenerator<T>,
-): TemplaterGenerator<T> => generate;
+  generate: TemplateGenerator<T>,
+): TemplateGenerator<T> => generate;
 
 const island = <
-  P,
-  R extends RpcDefinition = { [key: string]: any },
+  R extends RpcDefinition,
+  P = {},
 >(
-  _: Island<P, R>,
-): TemplaterGenerator<P> => Reface.addIsland(_);
+  _: Island<R, P>,
+): TemplateGenerator<P> => Reface.addIsland(_);
 
 export const inlineStyle = <P = undefined>(
   _: P extends undefined ? () => Style : (prop: P) => Style,

@@ -7,7 +7,7 @@ import type {
   RestHandlers,
   RpcCalls,
   RpcHandlers,
-  TemplaterGenerator,
+  TemplateGenerator,
 } from "$types";
 
 import { type Context, Hono } from "@hono/hono";
@@ -19,7 +19,7 @@ export class Reface {
   private static islandRestHandlers: Record<string, RestHandlers> = {};
   private static islandTemplateGenerators: Record<
     string,
-    TemplaterGenerator<any>
+    TemplateGenerator<any>
   > = {};
   private static islandRpcHandlers: Record<string, RpcHandlers<any>> = {};
 
@@ -38,7 +38,7 @@ export class Reface {
   //   return name;
   // }
 
-  static addIsland<P, R>(body: Island<P, R>) {
+  static addIsland<R, P>(body: Island<R, P>) {
     const name = body.name || `c${this.islandsCount++}`;
 
     if (body.rest) {
@@ -78,7 +78,7 @@ export class Reface {
     this.layout = options.layout;
   }
 
-  page(route: string, generate: TemplaterGenerator<PageProps>): Reface {
+  page(route: string, generate: TemplateGenerator<PageProps>): Reface {
     this.pages[route] = async (c: Context) => {
       const template = generate({
         route,
@@ -93,7 +93,7 @@ export class Reface {
     return this;
   }
 
-  partial(route: string, generate: TemplaterGenerator<any>): Reface {
+  partial(route: string, generate: TemplateGenerator<any>): Reface {
     throw new Error("Not implemented");
     // this.router.get(`/partial${route}`, async (c: Context) => {
     //   const template = generate({

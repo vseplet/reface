@@ -1,4 +1,13 @@
 import { Hono } from "jsr:@hono/hono@4.5.6";
+// import {
+//   clean,
+//   component,
+//   html,
+//   island,
+//   Reface,
+//   RESPONSE,
+// } from "jsr:@vseplet/reface@0.0.24";
+
 import {
   clean,
   component,
@@ -6,7 +15,7 @@ import {
   island,
   Reface,
   RESPONSE,
-} from "jsr:@vseplet/reface@0.0.24";
+} from "@vseplet/reface";
 
 const OutputBlock = component<{
   out: string;

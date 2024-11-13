@@ -63,7 +63,9 @@ export type Style = {
   args: Array<any | Template>;
 };
 
-export type TemplaterGenerator<T> = (props: T) => Template;
+export type TemplateGenerator<T> = (props: T) => Template;
+// export type TemplateGenerator<T = void> = T extends void ? () => Template
+//   : (props: T) => Template;
 
 export type RpcDefinition = { [key: string]: any };
 
@@ -86,7 +88,7 @@ export type RpcHandlers<R> = {
   }>;
 };
 
-export type Island<P, R> = {
+export type Island<R, P> = {
   name?: string;
   template: (
     args: {

@@ -1,5 +1,11 @@
 import { Hono } from "jsr:@hono/hono@4.5.6";
-import { clean, html, island, Reface, RESPONSE } from "jsr:@vseplet/reface@0.0.24";
+import {
+  clean,
+  html,
+  island,
+  Reface,
+  RESPONSE,
+} from "jsr:@vseplet/reface@0.0.24";
 
 const RandomJoke = island<{}, { joke: null }>({
   template: ({ rpc }) => {

@@ -4,6 +4,7 @@ import { Home } from "$/pages/Home.ts";
 import { wrapper } from "$/pages/wrapper.ts";
 
 const app = new Hono();
+
 const pages = new Reface({
   layout: clean({
     htmx: true,
