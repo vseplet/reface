@@ -6,7 +6,7 @@ import {
   type PageProps,
   Reface,
   RESPONSE,
-} from "jsr:@vseplet/reface@0.1.24";
+} from "jsr:@vseplet/reface@0.1.0";
 
 const RandomJoke = island<{ joke: null }, PageProps>({
   template: ({ rpc }) => {
