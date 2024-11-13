@@ -92,7 +92,7 @@ import {
   island,
   Reface,
   RESPONSE,
-} from "jsr:@vseplet/reface@0.1.24";
+} from "jsr:@vseplet/reface@0.1.0";
 ```
 
 Here is a simple example of a function that can "call" sh with a certain set of
@@ -140,7 +140,7 @@ Handling command input is a bit more complex and requires an island.
 Essentially, it is the same component but with additional RPC descriptions:
 
 ```ts
-const CommandInput = island<{}, { exec: { command: string } }>({
+const CommandInput = island<{ exec: { command: string } }, void>({
   name: "CommandInput",
   // deno-fmt-ignore
   template:({ rpc }) => html`
@@ -176,7 +176,7 @@ const Entry = component(() =>
   html`
   <div class="container grid my-3">
     <h1>Simple Web Terminal</h1>
-    <div class="row my-3">${CommandInput({})}</div>
+    <div class="row my-3">${CommandInput()}</div>
     <div class="row my-3">
       <div class="container p-3" style="height: 500px; overflow-y: scroll">
         <div id="output"></div>
